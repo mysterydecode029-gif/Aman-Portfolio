@@ -96,6 +96,7 @@ export default function ContactSection() {
       setFormData({ name: '', email: '', message: '' });
       setErrors({});
     } catch (err) {
+      console.error('EmailJS submission error:', err);
       setStatus('error');
       setErrorMessage(
         'Something went wrong. Please try again.'
