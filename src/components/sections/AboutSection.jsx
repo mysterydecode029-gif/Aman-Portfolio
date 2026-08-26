@@ -54,7 +54,7 @@ export default function AboutSection() {
               <div className="w-full h-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
                 <img
                   src={PERSONAL_INFO.photoSrc}
-                  alt="Aman"
+                  alt="Aman — Web Designer"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -75,7 +75,7 @@ export default function AboutSection() {
               <div className="text-right pl-2 sm:pl-3 border-l border-white/10 flex flex-col items-end">
                 <img
                   src={PERSONAL_INFO.signatureSrc}
-                  alt="Aman Signature"
+                  alt="Aman — Signature"
                   className="h-5 sm:h-6.5 w-auto object-contain brightness-0 invert opacity-90"
                 />
               </div>

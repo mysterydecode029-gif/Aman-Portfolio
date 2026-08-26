@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aman-portfolio-cagg.vercel.app/sitemap.xml

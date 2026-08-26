@@ -27,7 +27,7 @@ export default function Navbar({ activeIndex, onSelectSection }) {
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-white/25 bg-black p-0.5 shadow-lg group-hover:border-white/60 transition-all flex-shrink-0">
             <img
               src={PERSONAL_INFO.logoSrc}
-              alt="Aman Logo"
+              alt="Aman — Web Designer Logo"
               className="w-full h-full object-cover rounded-full"
             />
           </div>
