@@ -1,10 +1,12 @@
 import React from 'react';
-import { PERSONAL_INFO } from '../../data/portfolioData';
+import { PERSONAL_INFO, SECTION_QUOTES } from '../../data/portfolioData';
+import QuoteMarquee from '../QuoteMarquee';
 
 /**
  * AboutSection
  * Clean vertical stacking on mobile (375px, 390px, 412px) and balanced grid on desktop.
- * Displays user photograph in original natural colors and signature in identity plate.
+ * Displays user photograph in original natural colors, signature in identity plate,
+ * and seamless motivational quote marquee.
  */
 export default function AboutSection() {
   return (
@@ -19,7 +21,10 @@ export default function AboutSection() {
           <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-none">
             ABOUT
           </h2>
-          <div className="w-8 sm:w-10 h-[1px] bg-white/30 mt-1.5 sm:mt-2" />
+          {/* Motivational Quote Marquee replacing static line */}
+          <div className="mt-1.5 sm:mt-2">
+            <QuoteMarquee quotes={SECTION_QUOTES.about} />
+          </div>
         </div>
 
         {/* Responsive Content Grid: Vertical stack on mobile, Side-by-side on desktop */}

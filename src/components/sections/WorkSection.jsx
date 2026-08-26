@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { PROJECTS } from '../../data/portfolioData';
+import { PROJECTS, SECTION_QUOTES } from '../../data/portfolioData';
+import QuoteMarquee from '../QuoteMarquee';
 
 /**
  * WorkSection
  * Desktop: Clean 5x2 grid (all 10 project cards visible in one viewport).
  * Mobile: Spacious, readable Single Project Card Presenter with numbered tabs and next/prev controls.
+ * Features seamless motivational quote marquee under section heading.
  */
 export default function WorkSection() {
   const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
@@ -28,17 +30,16 @@ export default function WorkSection() {
     >
       <div className="max-w-5xl mx-auto w-full my-auto flex flex-col justify-center">
         
-        {/* Section Heading */}
-        <div className="mb-3 sm:mb-4 lg:mb-5 flex items-center justify-between">
-          <div>
-            <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-none">
-              WORK
-            </h2>
-            <div className="w-8 sm:w-10 h-[1px] bg-white/30 mt-1.5 sm:mt-2" />
+        {/* Section Heading with Quote Marquee */}
+        <div className="mb-3 sm:mb-4 lg:mb-5">
+          <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-none">
+            WORK
+          </h2>
+
+          {/* Motivational Quote Marquee replacing static line */}
+          <div className="mt-1.5 sm:mt-2">
+            <QuoteMarquee quotes={SECTION_QUOTES.work} />
           </div>
-          <span className="font-poppins text-[10px] sm:text-xs uppercase tracking-widest text-white/40">
-            {mobileActiveIndex + 1} of 10
-          </span>
         </div>
 
         {/* 1. DESKTOP ONLY: 5 Columns x 2 Rows Grid (lg+) */}

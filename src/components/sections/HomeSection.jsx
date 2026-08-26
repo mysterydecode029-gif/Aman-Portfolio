@@ -1,13 +1,15 @@
 import React from 'react';
-import { PERSONAL_INFO } from '../../data/portfolioData';
+import { PERSONAL_INFO, SECTION_QUOTES } from '../../data/portfolioData';
+import QuoteMarquee from '../QuoteMarquee';
 
 /**
  * HomeSection
  * Minimal, restrained typography hero.
  * Features:
  * 1. Prominent static "AMAN" title.
- * 2. Continuous, seamless infinite horizontal marquee for "WEB DESIGNER & DEVELOPER".
- * 3. Continuous, seamless infinite horizontal marquee for "SCROLL DOWN ↓".
+ * 2. Motivational quote marquee replacing horizontal strip.
+ * 3. Continuous, seamless infinite horizontal marquee for "WEB DESIGNER & DEVELOPER".
+ * 4. Continuous, seamless infinite horizontal marquee for "SCROLL DOWN ↓".
  */
 export default function HomeSection() {
   const marqueeItems = [
@@ -32,9 +34,14 @@ export default function HomeSection() {
       <div className="max-w-4xl mx-auto flex flex-col items-center my-auto w-full px-2">
         
         {/* Central Primary Identity — Static, majestic editorial serif */}
-        <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-[10.5rem] font-bold tracking-tight text-white leading-none mb-4 sm:mb-6 select-none">
+        <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-[10.5rem] font-bold tracking-tight text-white leading-none mb-3 sm:mb-4 select-none">
           {PERSONAL_INFO.name}
         </h1>
+
+        {/* Motivational Quote Marquee */}
+        <div className="w-full max-w-sm xs:max-w-md sm:max-w-xl lg:max-w-2xl mb-2 sm:mb-3">
+          <QuoteMarquee quotes={SECTION_QUOTES.home} />
+        </div>
 
         {/* 1. Continuous Seamless Infinite Horizontal Marquee for Subtitle */}
         <div 

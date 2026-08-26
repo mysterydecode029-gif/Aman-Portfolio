@@ -1,10 +1,12 @@
 import React from 'react';
-import { PROCESS_STAGES } from '../../data/portfolioData';
+import { PROCESS_STAGES, SECTION_QUOTES } from '../../data/portfolioData';
+import QuoteMarquee from '../QuoteMarquee';
 
 /**
  * ProcessSection
  * Desktop: Clean 5-column progression grid.
  * Mobile: Clean, readable vertical sequence of the 5 stages.
+ * Features seamless motivational quote marquee under section heading.
  */
 export default function ProcessSection() {
   return (
@@ -14,17 +16,16 @@ export default function ProcessSection() {
     >
       <div className="max-w-5xl mx-auto w-full my-auto flex flex-col justify-center">
         
-        {/* Section Heading */}
-        <div className="mb-3 sm:mb-4 lg:mb-5 flex items-center justify-between">
-          <div>
-            <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-none">
-              PROCESS
-            </h2>
-            <div className="w-8 sm:w-10 h-[1px] bg-white/30 mt-1.5 sm:mt-2" />
+        {/* Section Heading with Quote Marquee */}
+        <div className="mb-3 sm:mb-4 lg:mb-5">
+          <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-none">
+            PROCESS
+          </h2>
+
+          {/* Motivational Quote Marquee replacing static line */}
+          <div className="mt-1.5 sm:mt-2">
+            <QuoteMarquee quotes={SECTION_QUOTES.process} />
           </div>
-          <span className="font-poppins text-[10px] sm:text-xs uppercase tracking-widest text-white/40">
-            5 Stages
-          </span>
         </div>
 
         {/* 1. DESKTOP ONLY: 5-Column Grid (lg+) */}

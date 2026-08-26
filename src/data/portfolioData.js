@@ -19,6 +19,40 @@ export const NAVIGATION_LINKS = [
   { id: "contact", label: "CONTACT" },
 ];
 
+export const SECTION_QUOTES = {
+  home: [
+    "Create with purpose.",
+    "Build today. Inspire tomorrow.",
+    "Small details. Big difference.",
+    "Turn ideas into experiences.",
+  ],
+  about: [
+    "Keep learning. Keep building.",
+    "Curiosity creates possibilities.",
+    "Consistency turns ideas into reality.",
+    "Dream. Learn. Build.",
+  ],
+  work: [
+    "Every project is a new challenge.",
+    "Every detail matters.",
+    "Build with purpose.",
+    "Create work worth remembering.",
+  ],
+  services: [
+    "Good design solves problems.",
+    "Simplicity creates clarity.",
+    "Build experiences, not just interfaces.",
+    "Design with purpose.",
+  ],
+  process: [
+    "Think clearly.",
+    "Build patiently.",
+    "Refine relentlessly.",
+    "Step by step. Day by day.",
+    "Focus. Process. Progress.",
+  ],
+};
+
 export const SERVICES = [
   {
     id: "01",

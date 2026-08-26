@@ -2,9 +2,14 @@ import React, { useEffect, useRef } from 'react';
 
 /**
  * CodeCanvasBackground
- * Calm, smooth, and relaxed continuous vertical streams of monochrome code-rain.
- * Features fading tails, varied gentle stream speeds (~0.16 - 0.52), and periodic character mutations.
- * Strictly black, dark gray, medium gray, and subtle light gray highlights.
+ * Original main-website binary 0/1 vertical falling-code animation.
+ * 
+ * Features:
+ * 1. Features 0 and 1 characters flowing vertically from TOP to BOTTOM.
+ * 2. Calm, relaxed speeds (0.16 - 0.52 px/frame) with fading trails.
+ * 3. Subtle monochrome palette (black, dark gray, medium gray, soft light gray).
+ * 4. ABSOLUTELY NO GREEN.
+ * 5. Positioned as the global background layer behind main website sections (z-[1]).
  */
 export default function CodeCanvasBackground() {
   const canvasRef = useRef(null);
@@ -23,8 +28,8 @@ export default function CodeCanvasBackground() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // Programming characters & alphanumeric symbols
-    const chars = '01<>/{}();:_ABCXYZ=+*[]&#$'.split('');
+    // Original binary characters 0 and 1
+    const chars = ['0', '1'];
 
     const isMobile = width < 768;
     const fontSize = isMobile ? 12 : 14;
@@ -34,7 +39,7 @@ export default function CodeCanvasBackground() {
     // Initialize continuous streams with calm, relaxed speeds
     const initStream = (initialScatter = false) => {
       const streamLength = 12 + Math.floor(Math.random() * 22); // 12 - 34 characters long
-      const speed = 0.16 + Math.random() * 0.36; // calm, relaxed downward flow (~50% slower)
+      const speed = 0.16 + Math.random() * 0.36; // calm, relaxed downward flow (~0.16 - 0.52)
       const startY = initialScatter
         ? Math.random() * (height / fontSize + streamLength) - streamLength
         : -streamLength - Math.random() * 15;
@@ -82,7 +87,7 @@ export default function CodeCanvasBackground() {
           stream.mutationTimer = 0;
         }
 
-        // Draw each character in the vertical stream
+        // Draw each 0/1 character in the vertical stream
         for (let i = 0; i < stream.length; i++) {
           const charY = (stream.y - i) * fontSize;
 

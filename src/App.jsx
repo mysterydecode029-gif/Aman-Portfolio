@@ -146,7 +146,7 @@ export default function App() {
       {/* Interactive Cute Lamp Intro Experience (Appears on every open, z-50) */}
       <LampIntro />
 
-      {/* Live Code Animation Canvas (z-[1]) */}
+      {/* Live 0/1 Code Animation Canvas for Main Website (z-[1]) */}
       <CodeCanvasBackground />
 
       {/* Persistent Header (z-40) */}

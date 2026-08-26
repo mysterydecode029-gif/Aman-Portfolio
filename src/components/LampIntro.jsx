@@ -1,26 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import LampMTypingBackground from './LampMTypingBackground';
 
 /**
  * LampIntro
  * Cute, friendly animated lamp with:
  * 1. Infinite RIGHT -> LEFT marquee for AMAN at top.
- * 2. Gentle hanging swing animation.
- * 3. Soft irregular eye blinking.
- * 4. Real downward drag/pull interaction (requires >= 35px drag, no click/hover activation).
- * 5. Warm, elegant amber light cone originating from the lamp base spreading downward.
- * 6. Zero "ENTER DIRECTLY" button.
+ * 2. Subtle 'M' character hacker-style typing/flow background strictly inside this intro section.
+ * 3. Natural interactive pendulum physics (drag lamp sideways on mouse/touch with smooth swinging return).
+ * 4. Gentle hanging swing animation.
+ * 5. Soft irregular eye blinking.
+ * 6. Real downward drag/pull interaction (requires >= 35px drag, no click/hover activation).
+ * 7. Warm, elegant amber light cone originating from the lamp base spreading downward.
+ * 8. Continuous, seamless motivational quote marquee near the lamp.
  */
 export default function LampIntro({ onComplete }) {
   const [isTurnedOn, setIsTurnedOn] = useState(false);
   const [isBlinking, setIsBlinking] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [isDraggingLamp, setIsDraggingLamp] = useState(false);
   const audioContextRef = useRef(null);
   const speechAttemptedRef = useRef(false);
   const hasTriggeredRef = useRef(false);
 
+  // Framer Motion values for physical pendulum drag
+  const lampX = useMotionValue(0);
+  const lampRotate = useTransform(lampX, [-140, 140], [-20, 20]);
+
   // Check for prefers-reduced-motion
   const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Lamp motivational quote ticker items
+  const lampQuotes = [
+    'Keep building. Keep learning. Keep moving forward.',
+    'Keep building. Keep learning. Keep moving forward.',
+    'Keep building. Keep learning. Keep moving forward.',
+  ];
 
   // Synthesize a crisp mechanical switch click sound
   const playSwitchClick = () => {
@@ -143,9 +158,12 @@ export default function LampIntro({ onComplete }) {
           role="dialog"
           aria-label="Welcome Introduction"
         >
+          {/* Subtle 'M' character typing/flow background strictly scoped to the Lamp intro screen */}
+          <LampMTypingBackground />
+
           {/* 1. Top "AMAN" Infinite Right -> Left Marquee */}
           <div 
-            className="w-full max-w-sm pt-6 overflow-hidden select-none pointer-events-none relative"
+            className="w-full max-w-sm pt-6 overflow-hidden select-none pointer-events-none relative z-10"
             style={{
               maskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%)',
               WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%)',
@@ -178,18 +196,39 @@ export default function LampIntro({ onComplete }) {
             </div>
           </div>
 
-          {/* 2. Lamp Character Container with Gentle Hanging Swing */}
+          {/* 2. Lamp Character Container with Interactive Pendulum Drag */}
           <div className="relative flex flex-col items-center justify-center flex-1 w-full max-w-md px-4">
             
-            {/* Hanging Cord with Pivot at Top */}
+            {/* Hanging Cord with Pivot at Top & Interactive Pendulum Drag */}
             <motion.div
-              animate={prefersReducedMotion ? {} : { rotate: [-1.2, 1.2, -1.2] }}
-              transition={{ repeat: Infinity, duration: 5.5, ease: 'easeInOut' }}
-              style={{ transformOrigin: 'top center' }}
-              className="flex flex-col items-center"
+              drag={isTurnedOn || prefersReducedMotion ? false : "x"}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.45}
+              dragTransition={{ bounceStiffness: 140, bounceDamping: 7 }}
+              style={{ 
+                x: lampX,
+                rotate: lampRotate,
+                transformOrigin: 'top center',
+                touchAction: 'none',
+              }}
+              onDragStart={() => setIsDraggingLamp(true)}
+              onDragEnd={() => {
+                setIsDraggingLamp(false);
+              }}
+              animate={
+                !isDraggingLamp && !prefersReducedMotion && !isTurnedOn
+                  ? { rotate: [-1.4, 1.4, -1.4] }
+                  : {}
+              }
+              transition={
+                !isDraggingLamp
+                  ? { repeat: Infinity, duration: 5.5, ease: 'easeInOut' }
+                  : { type: 'spring', stiffness: 140, damping: 7 }
+              }
+              className="flex flex-col items-center cursor-grab active:cursor-grabbing select-none"
             >
               {/* Cord */}
-              <div className="w-[1.5px] h-20 sm:h-28 bg-gradient-to-b from-white/20 via-white/40 to-white/70" />
+              <div className="w-[1.5px] h-20 sm:h-28 bg-gradient-to-b from-white/20 via-white/40 to-white/70 pointer-events-none" />
 
               {/* Lamp Fixture */}
               <motion.div 
@@ -251,7 +290,7 @@ export default function LampIntro({ onComplete }) {
                 {/* Base Rim of Shade */}
                 <div className="w-40 sm:w-46 h-2.5 bg-white/60 rounded-full shadow-lg border border-white/30 relative z-10" />
 
-                {/* 5. Warm Amber Light Cone (Originating directly from Lamp Base spreading downward) */}
+                {/* Warm Amber Light Cone (Originating directly from Lamp Base spreading downward) */}
                 <motion.div
                   initial={{ opacity: 0, scaleY: 0 }}
                   animate={isTurnedOn ? { opacity: 1, scaleY: 1 } : { opacity: 0, scaleY: 0 }}
@@ -277,7 +316,7 @@ export default function LampIntro({ onComplete }) {
                   />
                 </motion.div>
 
-                {/* 4. Hanging Rope with REAL Downward Drag / Pull Interaction */}
+                {/* Hanging Rope with REAL Downward Drag / Pull Interaction */}
                 <div className="relative flex flex-col items-center mt-0 z-20">
                   {/* Switch Bead */}
                   <div className="w-2 h-2 bg-white/40 rounded-full" />
@@ -325,17 +364,53 @@ export default function LampIntro({ onComplete }) {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.5 }}
-              className="mt-10 text-center pointer-events-none select-none"
+              className="mt-8 text-center pointer-events-none select-none"
             >
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/15 text-xs tracking-widest uppercase font-poppins text-white/60">
                 <span>Pull rope down</span>
                 <span className="inline-block animate-bounce">↓</span>
               </div>
             </motion.div>
+
+            {/* Motivational Quote Infinite Right -> Left Marquee near Lamp */}
+            <div 
+              className="w-full max-w-xs xs:max-w-sm sm:max-w-md overflow-hidden py-1 mt-4 sm:mt-5 pointer-events-none select-none relative"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%)',
+              }}
+            >
+              <div className="flex w-max animate-quote-marquee">
+                {/* Track 1 */}
+                <div className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8">
+                  {lampQuotes.map((quote, idx) => (
+                    <div key={`lq1-${idx}`} className="flex items-center gap-6 sm:gap-8">
+                      <span className="font-poppins text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-white/60 font-light whitespace-nowrap">
+                        {quote}
+                      </span>
+                      <span className="text-white/25 text-[9px] select-none">✦</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Track 2 (Duplicate for Seamless Loop) */}
+                <div className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8" aria-hidden="true">
+                  {lampQuotes.map((quote, idx) => (
+                    <div key={`lq2-${idx}`} className="flex items-center gap-6 sm:gap-8">
+                      <span className="font-poppins text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-white/60 font-light whitespace-nowrap">
+                        {quote}
+                      </span>
+                      <span className="text-white/25 text-[9px] select-none">✦</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          {/* Bottom spacing (No Enter Directly button) */}
-          <div className="pb-8" />
+          {/* Bottom spacing */}
+          <div className="pb-6" />
         </motion.div>
       )}
     </AnimatePresence>
